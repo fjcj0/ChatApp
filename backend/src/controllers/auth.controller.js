@@ -65,5 +65,11 @@ export const login = async (request, response) => {
 };
 
 export const logout = (request, response) => {
-
+    try {
+        response.cookie("jwt", "", { maxAge: 0 });
+        response.status(200).json({ message: "User logged out successfully!!!" });
+    } catch (error) {
+        console.log(error.message);
+        return response.status(200).json({ error: error.message });
+    }
 };
