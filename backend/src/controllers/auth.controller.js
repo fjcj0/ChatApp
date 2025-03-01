@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../lib/utils.js';
+import cloudinary from '../lib/cloudinary.js';
 export const signup = async (request, response) => {
     const { fullName, email, password } = request.body;
     try {
@@ -71,5 +72,21 @@ export const logout = (request, response) => {
     } catch (error) {
         console.log(error.message);
         return response.status(200).json({ error: error.message });
+    }
+};
+
+export const updateProfile = async (request, response) => {
+    try {
+        const { profilePic } = request.body;
+        const userId = request.user._id;
+        if (!profilePic) {
+            return response.status(400).json({ message: "the profile not choose!!" });
+        }
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
+        const updateUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url }, { new: true });
+        response.status(200).json(updateUser);
+    } catch (error) {
+        console.log(error.message);
+        return response.status(400).json({ error: error.message });
     }
 };
