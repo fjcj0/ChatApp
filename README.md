@@ -37,5 +37,3 @@ Ensure you have the following installed:
 - Node.js and npm 🌱
 - MongoDB (local or cloud database like MongoDB Atlas) 🌐
 - Git (optional, for version control) 🧑‍💻
-
-### Clone the Repository
