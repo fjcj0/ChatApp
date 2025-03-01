@@ -90,3 +90,12 @@ export const updateProfile = async (request, response) => {
         return response.status(400).json({ error: error.message });
     }
 };
+
+export const checkAuth = (request, response) => {
+    try {
+        return response.status(200).json(request.user);
+    } catch (error) {
+        console.log(error.message);
+        return response.status(400).json({ error: error.message });
+    }
+};
