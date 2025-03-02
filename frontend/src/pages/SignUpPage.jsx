@@ -3,7 +3,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { Mail, Lock, Eye, EyeOff, Loader2, User, MessageSquare } from 'lucide-react'; // Import icons correctly
 import { Link } from 'react-router-dom';
 import AuthImagePattern from '../components/AuthImagePattern';
-
+import { toast } from 'react-hot-toast'
 const SignUpPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
@@ -12,20 +12,21 @@ const SignUpPage = () => {
         password: "",
     });
     const { signup, isSigningUp } = useAuthStore();
-
     const validateForm = () => {
-        return formData.fullName && formData.email && formData.password;
+        if (!formData.fullName.trim()) return toast.error("Full name is required");
+        if (!formData.email.trim()) return toast.error("Email is required");
+        if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
+        if (!formData.password) return toast.error("Password is required");
+        if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
+        return true;
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (validateForm()) {
+        const success = validateForm();
+        if (success === true) {
             signup(formData);
-        } else {
-            alert("Please fill in all fields!");
         }
     };
-
     return (
         <div className="min-h-screen grid lg:grid-cols-2">
             <div className="flex flex-col justify-center items-center p-6 sm:p-12">
@@ -44,7 +45,6 @@ const SignUpPage = () => {
                             <p className="text-base-content/60">Get started with your free account</p>
                         </div>
                     </div>
-
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="form-control">
                             <label className="label">
@@ -61,13 +61,11 @@ const SignUpPage = () => {
                                 />
                             </div>
                         </div>
-
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-medium">Email</span>
                             </label>
                             <div className="relative">
-
                                 <input
                                     type="email"
                                     className="input input-bordered w-full"
@@ -77,14 +75,12 @@ const SignUpPage = () => {
                                 />
                             </div>
                         </div>
-
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-medium">Password</span>
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-
                                 </div>
                                 <input
                                     type={showPassword ? "text" : "password"}
@@ -106,7 +102,6 @@ const SignUpPage = () => {
                                 </button>
                             </div>
                         </div>
-
                         <button type="submit" className="btn btn-primary w-full" disabled={isSigningUp}>
                             {isSigningUp ? (
                                 <>
@@ -118,7 +113,6 @@ const SignUpPage = () => {
                             )}
                         </button>
                     </form>
-
                     <div className="text-center">
                         <p className="text-base-content/60">
                             Already have an account?{" "}
@@ -133,5 +127,4 @@ const SignUpPage = () => {
         </div>
     );
 };
-
 export default SignUpPage;
