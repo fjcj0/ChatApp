@@ -23,7 +23,7 @@ app.use(cors({
 app.options('*', cors());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/message', messageRoutes);
+app.use('/api/messages', messageRoutes);
 
 const PORT = process.env.PORT;
 
