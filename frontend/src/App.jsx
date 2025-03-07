@@ -11,11 +11,12 @@ import { Loader } from 'lucide-react';
 import { Toaster } from 'react-hot-toast'
 import { useThemeStore } from "./store/useThemeStore";
 function App() {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { theme } = useThemeStore();
+  console.log({ onlineUsers });
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-  const { theme } = useThemeStore();
   if (isCheckingAuth && !authUser) return (
     <div className=" flex items-center justify-center h-screen">
       <Loader className='z-10 w-16 h-16 animate-spin' />
