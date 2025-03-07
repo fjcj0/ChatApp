@@ -11,12 +11,16 @@ const ChatContainer = () => {
         getMessages,
         isMessagesLoading,
         selectedUser,
+        subscribeToMessages,
+        unsubscribeFromMessages
     } = useChatStore();
     const { authUser } = useAuthStore();
     const messageEndRef = useRef(null);
     useEffect(() => {
         getMessages(selectedUser._id);
-    }, [selectedUser._id, getMessages]);
+        subscribeToMessages();
+        return () => unsubscribeFromMessages();
+    }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
     useEffect(() => {
         if (messageEndRef.current && messages) {
             messageEndRef.current.scrollIntoView({ behavior: "smooth" });
