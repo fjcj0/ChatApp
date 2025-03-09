@@ -6,7 +6,6 @@ import { connectDB } from './lib/db.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { app, server, io } from './lib/socket.js';
-import serverless from 'serverless-http';
 dotenv.config();
 
 app.use(express.json());
@@ -29,6 +28,3 @@ server.listen(PORT, () => {
     console.log(`App listening on port ${PORT} 🚀`);
     connectDB();
 });
-
-
-module.exports.handler = serverless(app);
