@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'https://chat-app-five-dusky-86.vercel.app',
+    origin: 'http://localhost:5173',
     credentials: true,
 }));
 
