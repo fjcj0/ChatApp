@@ -4,8 +4,7 @@
   "description": "A real-time chat application that allows users to communicate with each other in private and group chats. Built using modern web technologies and designed to be scalable and easy to use.",
   "main": "index.js",
   "scripts": {
-  "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "npm run start --prefix backend"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
